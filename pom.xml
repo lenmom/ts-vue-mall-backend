@@ -31,7 +31,9 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
         <skipTests>true</skipTests>
-        <docker.host>http://192.168.3.101:2375</docker.host>
+        <!-- <docker.host>http://127.0.0.1:2375</docker.host> -->
+        <dockerHost>unix:///var/run/docker.sock</dockerHost>
+        <docker.pushRegistry>127.0.0.1:5000</docker.pushRegistry>
         <docker.maven.plugin.version>0.40.2</docker.maven.plugin.version>
         <pagehelper-starter.version>1.4.5</pagehelper-starter.version>
         <pagehelper.version>5.3.2</pagehelper.version>
@@ -226,10 +228,14 @@
                     <configuration>
                         <!-- Docker 远程管理地址-->
                         <dockerHost>${docker.host}</dockerHost>
+                        <!-- Docker 推送镜像仓库地址-->
+                        <!-- <pushRegistry>http://${docker.pushRegistry}</pushRegistry> -->
                         <images>
                             <image>
                                 <!--定义镜像名称-->
+                                <!--由于推送到私有镜像仓库，镜像名需要添加仓库地址-->
                                 <name>mall/${project.name}:${project.version}</name>
+                                <!-- <name>${docker.pushRegistry}/mall/${project.name}:${project.version}</name> -->
                                 <!--定义镜像构建行为-->
                                 <build>
                                     <!--定义基础镜像-->
